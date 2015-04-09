@@ -25,10 +25,16 @@ public aspect Tracker {
 		}
 	}
 	
-	public pointcut testMethodFlow() : cflowbelow(call(* SampleTest.*(..))) && !within(Tracker) && !call(* java.io..*(*)) && !call(* java.lang..*(..));
+	public pointcut testMethodFlow() : 
+		cflowbelow(call(* SampleTest.*(..))) && !within(Tracker) &&
+		!call(* java.io..*(*)) &&
+		!call(* java.lang..*(..)) &&
+		!initialization(*.new(..)) && 
+		!preinitialization(*.new(..)) &&
+		!handler(*);
 	public pointcut testMethodCall() : call(* SampleTest.*(..));
 	
-	before() : testMethodCall() {
+	Object around() : testMethodCall() {
 		position[0] = "\t\"test method\"";
 		try {
 			bw.write("digraph output {\n");
@@ -36,9 +42,22 @@ public aspect Tracker {
 	    catch(IOException e) {
 	    	e.printStackTrace();
 	    }
+		
+		Object returnValue = proceed();
+		
+		try {
+			bw.write("\n}\n");
+		    bw.flush();
+		    bw.close();
+	    }
+	    catch(IOException e) {
+	    	e.printStackTrace();
+	    }
+		
+		return returnValue;
 	}
 
-	before() : testMethodFlow() {
+	Object around() : testMethodFlow() {
 		if (thisJoinPoint.getKind().equals("method-call"))
 		{
 			currentMethod = thisJoinPoint.getSignature().toString();
@@ -53,25 +72,17 @@ public aspect Tracker {
 				e.printStackTrace();
 			}
 		}
-	}
-	
-	after() : testMethodFlow() {
+		
+		Object returnValue = proceed();
+		
 		if (thisJoinPoint.getKind().equals("method-call"))
 		{
 			currentMethod = thisJoinPoint.getSignature().toString();
 			System.out.println("FINISH:\t" + currentMethod);
 			index--;
 		}
+		
+		return returnValue;
 	}
 
-	after() : testMethodCall() {
-		try {
-			bw.write("\n}\n");
-		    bw.flush();
-		    bw.close();
-	    }
-	    catch(IOException e) {
-	    	e.printStackTrace();
-	    }
-	}
 }

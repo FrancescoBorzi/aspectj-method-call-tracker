@@ -10,32 +10,38 @@ public class SampleApplication {
 		return 1;
 	}
 	
-	public int B() {
+	public float B() {
 		
 		System.out.println("Running method B...");
 		
-		C();
+		C(3);
 		D();
 		
-		return 1;
+		return 1.0f;
 	}
 
-	public int C() {
+	public int C(int x) {
+		
 		
 		System.out.println("Running method C...");
+		
+		if (x > 2)
+		{
+			G();
+		}
 		
 		E();
 		
 		return 1;
 	}
 	
-	public int D() {
+	public String D() {
 		
 		System.out.println("Running method D...");
 		
 		F();
 		
-		return 1;
+		return "test";
 	}
 	
 	public int E() {
@@ -47,13 +53,17 @@ public class SampleApplication {
 		return 1;
 	}
 	
-	public int F() {
+	public void F() {
 		
 		System.out.println("Running method F...");
 		
+	}
+	
+public double G() {
 		
+		System.out.println("Running method G...");
 		
-		return 1;
+		return 1.0;
 	}
 
 }

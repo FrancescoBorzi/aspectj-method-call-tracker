@@ -32,6 +32,7 @@ public aspect Tracker {
 		!initialization(*.new(..)) && 
 		!preinitialization(*.new(..)) &&
 		!handler(*);
+
 	public pointcut testMethodCall() : call(* SampleTest.*(..));
 	
 	Object around() : testMethodCall() {

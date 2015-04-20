@@ -1,0 +1,10 @@
+digraph output {
+	"test method" -> 	"int SampleApplication.A(int)";
+	"int SampleApplication.A(int)" -> 	"float SampleApplication.B()";
+	"float SampleApplication.B()" -> 	"int SampleApplication.C(int)";
+	"int SampleApplication.C(int)" -> 	"double SampleApplication.G()";
+	"int SampleApplication.C(int)" -> 	"int SampleApplication.E()";
+	"float SampleApplication.B()" -> 	"String SampleApplication.D()";
+	"String SampleApplication.D()" -> 	"void SampleApplication.F()";
+
+}

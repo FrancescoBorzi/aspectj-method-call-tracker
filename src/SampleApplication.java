@@ -1,11 +1,14 @@
 
 public class SampleApplication {
 	
-	public int A() {
+	public int A(int x) {
 		
 		System.out.println("Running method A...");
 		
-		B();
+		if (x > 10)
+			B();
+		else
+			C(2);
 		
 		return 1;
 	}

@@ -5,6 +5,6 @@ public class SampleTest {
 		
 		SampleApplication myApp = new SampleApplication();
 		
-		myApp.A();
+		myApp.A(11);
 	}
 }

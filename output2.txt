@@ -1,0 +1,6 @@
+digraph output {
+	"test method" -> 	"int SampleApplication.A(int)";
+	"int SampleApplication.A(int)" -> 	"int SampleApplication.C(int)";
+	"int SampleApplication.C(int)" -> 	"int SampleApplication.E()";
+
+}

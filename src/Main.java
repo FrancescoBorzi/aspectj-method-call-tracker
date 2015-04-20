@@ -1,5 +1,7 @@
 
 import java.io.*;
+import java.util.Iterator;
+import java.util.List;
 
 public class Main {
 
@@ -8,6 +10,10 @@ public class Main {
 		SampleTest.testA();
 
 		GenericTree<String> tree = new GenericTree<String>();
+		GenericTree<String> tree2 = new GenericTree<String>();
+
+		List<GenericTreeNode<String>> list;
+		List<GenericTreeNode<String>> list2;
 
 		BufferedReader reader;
 		String line;
@@ -26,6 +32,42 @@ public class Main {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		try {
+			reader = new BufferedReader(new FileReader("output2.txt"));
+			
+			reader.readLine();
+			
+			while ((line = reader.readLine()) != null) {
+				importLine(line, tree2);
+			}
+
+			System.out.println(tree2.toStringWithDepth());
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		list = tree.build(GenericTreeTraversalOrderEnum.PRE_ORDER);
+		//list2 = tree2.build(GenericTreeTraversalOrderEnum.PRE_ORDER);
+		
+		Iterator<GenericTreeNode<String>> itr = list.iterator();
+		
+		while (itr.hasNext()) {
+			GenericTreeNode<String> node = itr.next();
+			String data = node.getData();
+			
+			GenericTreeNode<String> node2 = tree2.find(data);
+
+			if (node2 != null) {
+				System.out.println("Node: " + data);
+				System.out.println("Tree1 depth:" + node.getDepth());
+				System.out.println("Tree2 depth:" + node2.getDepth());
+				System.out.println("\n");
+			}
+					
+		}
+
 
 	}
 	
